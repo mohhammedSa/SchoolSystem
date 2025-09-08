@@ -8,6 +8,8 @@ private:
     short _Age;
 
 public:
+    
+    ClsPerson(){};
     ClsPerson(string ID, string fullName, string phoneNumber, string email, string adress, short age)
     {
         _ID = ID;
