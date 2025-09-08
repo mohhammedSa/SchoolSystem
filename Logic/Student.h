@@ -12,7 +12,8 @@ private:
     enum enMode
     {
         EmptyMode = 1,
-        updateMode = 2
+        AddMode = 2,
+        updateMode = 3
     };
 
     string _Grade;
@@ -21,6 +22,14 @@ private:
     static ClsStudent _EmptyStudentObject()
     {
         return ClsStudent(enMode::EmptyMode, "", "", "", "", "", 0, "");
+    }
+
+    static string readString(string message)
+    {
+        string S;
+        cout << message;
+        cin >> S;
+        return S;
     }
 
     static string ConvertStudentObjToLine(ClsStudent Student, string delim = "#//#")
@@ -102,6 +111,24 @@ public:
     {
         _mode = mode;
         _Grade = grade;
+    }
+
+    static ClsStudent EmptyObjectForAdding(string id)
+    {
+        return ClsStudent(enMode::AddMode, id, "", "", "", "", 0, "");
+    }
+
+    static void ReadStudentInfo(ClsStudent &Student)
+    {
+        Student.SetFullname(readString("Enter student's fullname: "));
+        Student.SetPhoneNumber(readString("Enter student's phonenumber: "));
+        Student.SetEmail(readString("Enter student's email: "));
+        Student.SetAdress(readString("Enter student's address: "));
+        short age;
+        cout << "Enter Student's age: ";
+        cin >> age;
+        Student.SetAge(age);
+        Student.setGrade(readString("Enter student's grade: "));
     }
 
     void SetMode(enMode mode)

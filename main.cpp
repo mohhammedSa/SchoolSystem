@@ -46,7 +46,7 @@ string readString(string message)
 {
     string S;
     cout << message;
-    cin >> message;
+    cin >> S;
     return S;
 }
 
@@ -61,6 +61,20 @@ void AddStudent()
     else
     {
         cout << "Student does not exist.\n";
+    }
+    cout << "Do you want to add student with id : " << StudentId << " [y/n]: ";
+    char answer;
+    cin >> answer;
+
+    if (tolower(answer) == 'y')
+    {
+        St1 = ClsStudent::EmptyObjectForAdding(StudentId);
+        ClsStudent::ReadStudentInfo(St1);
+        St1.PrintStudentInfo();
+    }
+    else
+    {
+        cout << "Operation Failed.\n";
     }
 }
 
