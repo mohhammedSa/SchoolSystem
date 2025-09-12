@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <fstream>
+#include <limits>
 #include "Person.h"
 using namespace std;
 
@@ -17,8 +18,8 @@ private:
     };
 
     string _Grade;
-
     enMode _mode;
+
     static ClsStudent _EmptyStudentObject()
     {
         return ClsStudent(enMode::EmptyMode, "", "", "", "", "", 0, "");
@@ -28,7 +29,7 @@ private:
     {
         string S;
         cout << message;
-        cin >> S;
+        getline(cin, S);
         return S;
     }
 
@@ -120,6 +121,7 @@ public:
 
     static void ReadStudentInfo(ClsStudent &Student)
     {
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         Student.SetFullname(readString("Enter student's fullname: "));
         Student.SetPhoneNumber(readString("Enter student's phonenumber: "));
         Student.SetEmail(readString("Enter student's email: "));
@@ -128,6 +130,7 @@ public:
         cout << "Enter Student's age: ";
         cin >> age;
         Student.SetAge(age);
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         Student.setGrade(readString("Enter student's grade: "));
     }
 
@@ -183,6 +186,8 @@ public:
     {
         return !Find(id).isEmpty();
     }
+
+    void save() {}
 
     void PrintStudentInfo()
     {

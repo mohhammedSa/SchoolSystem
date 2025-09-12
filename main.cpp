@@ -50,6 +50,25 @@ string readString(string message)
     return S;
 }
 
+void AddLineToFile(string filename, string line)
+{
+    fstream StudentsFile;
+    StudentsFile.open(StudentFileName, ios::out | ios::app);
+
+    if (StudentsFile.is_open())
+    {
+        StudentsFile << line << "\n";
+        StudentsFile.close();
+    }
+}
+
+string ConvertStudentObjToLine(ClsStudent Student, string delim = "#//#")
+{
+    return Student.GetId() + delim + Student.GetFullname() + delim + Student.GetPhoneNumber() +
+           delim + Student.GetEmail() + delim + Student.GetAdress() + delim + to_string(Student.GetAge()) +
+           delim + Student.getGrade();
+}
+
 void AddStudent()
 {
     string StudentId = readString("Enter student Id: ");
@@ -60,21 +79,37 @@ void AddStudent()
     }
     else
     {
-        cout << "Student does not exist.\n";
-    }
-    cout << "Do you want to add student with id : " << StudentId << " [y/n]: ";
-    char answer;
-    cin >> answer;
+        cout << "Student does not exist.\n\n";
+        cout << "Do you want to add student with id : " << StudentId << " [y/n]: ";
+        char answer;
+        cin >> answer;
 
-    if (tolower(answer) == 'y')
-    {
-        St1 = ClsStudent::EmptyObjectForAdding(StudentId);
-        ClsStudent::ReadStudentInfo(St1);
-        St1.PrintStudentInfo();
-    }
-    else
-    {
-        cout << "Operation Failed.\n";
+        if (tolower(answer) == 'y')
+        {
+            St1 = ClsStudent::EmptyObjectForAdding(StudentId);
+            ClsStudent::ReadStudentInfo(St1);
+            St1.PrintStudentInfo();
+            string line = ConvertStudentObjToLine(St1);
+
+            cout << "Do you want to add " << St1.GetFullname() << " : [y/n]: ";
+            char answer;
+            cin >> answer;
+            if (tolower(answer) == 'y')
+            {
+                AddLineToFile(StudentFileName, line);
+                cout << "\nStudent added succussfully\n";
+            }
+            else
+            {
+                cout << "\nOperation failed.\n";
+            }
+
+            St1.save();
+        }
+        else
+        {
+            cout << "Operation Failed.\n";
+        }
     }
 }
 
