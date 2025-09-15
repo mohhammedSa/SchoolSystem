@@ -87,7 +87,7 @@ void AddStudent()
         if (tolower(answer) == 'y')
         {
             St1 = ClsStudent::EmptyObjectForAdding(StudentId);
-            ClsStudent::ReadStudentInfo(St1);
+            ClsStudent::ReadStudentInfo(St1, "\nRead Student's info for add: ");
             St1.PrintStudentInfo();
             string line = ConvertStudentObjToLine(St1);
 
@@ -96,15 +96,25 @@ void AddStudent()
             cin >> answer;
             if (tolower(answer) == 'y')
             {
-                AddLineToFile(StudentFileName, line);
-                cout << "\nStudent added succussfully\n";
+                ClsStudent::enSvResult result = St1.save();
+                switch (result)
+                {
+                case ClsStudent::enSvResult::enSvSucceeded:
+                    cout << "\nStudent added succussfully\n";
+                    break;
+
+                case ClsStudent::enSvResult::enSvFailedEmptyObejct:
+                    cout << "\nOperation failed, Empty object.\n";
+                    break;
+
+                default:
+                    break;
+                }
             }
             else
             {
                 cout << "\nOperation failed.\n";
             }
-
-            St1.save();
         }
         else
         {
@@ -113,7 +123,58 @@ void AddStudent()
     }
 }
 
+void UpdateStudent()
+{
+    string StudentId = readString("Enter student Id: ");
+    ClsStudent St1 = ClsStudent::Find(StudentId);
+    if (St1.isStudentExists(StudentId))
+    {
+        St1.PrintStudentInfo();
+        ClsStudent::ReadStudentInfo(St1, "\nRead Student's info for update: ");
+        St1.PrintStudentInfo();
+
+        cout << "\nDo you want to update " << St1.GetFullname() << " : [y/n]: ";
+        char answer;
+        cin >> answer;
+        if (tolower(answer) == 'y')
+        {
+            ClsStudent::enSvResult result = St1.save();
+            switch (result)
+            {
+            case ClsStudent::enSvResult::enSvSucceeded:
+                cout << "\nStudent added succussfully\n";
+                break;
+
+            case ClsStudent::enSvResult::enSvFailedEmptyObejct:
+                cout << "\nOperation failed, Empty object.\n";
+                break;
+
+            default:
+                break;
+            }
+        }
+        else
+        {
+            cout << "Operation Failed.\n";
+        }
+    }
+    else
+    {
+        cout << "Student does not exist./";
+    }
+}
+
+void ListStudents()
+{
+    vector<ClsStudent> Students = ClsStudent::LoadStudents();
+
+    for (ClsStudent &S : Students)
+    {
+        S.PrintStudentInfo();
+    }
+}
+
 int main()
 {
-    AddStudent();
+    UpdateStudent();
 }

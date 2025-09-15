@@ -87,16 +87,61 @@ private:
         return vStrings;
     }
 
-    static vector<ClsStudent> LoadStudents()
+    void AddStudentToFile(string filename)
     {
-        vector<ClsStudent> StudentObjects;
-        vector<string> vStrings = LoadLinesFromFile();
+        fstream StudentsFile;
+        StudentsFile.open(StudentFileName, ios::out | ios::app);
 
-        for (string &S : vStrings)
+        if (StudentsFile.is_open())
         {
-            StudentObjects.push_back(ConvertLineToStudentObj(S));
+            StudentsFile << ConvertStudentObjToLine(*this) << "\n";
+            StudentsFile.close();
         }
-        return StudentObjects;
+    }
+
+    void _AddStudent()
+    {
+        AddStudentToFile(StudentFileName);
+    }
+
+    void ClearFile(string filename){
+        fstream File;
+        File.open(filename,ios::out | ios::trunc);
+        File.close();
+    }
+
+    void _SaveStudentsToFile(vector<ClsStudent> Students)
+    {
+        ClearFile(StudentFileName);
+        fstream File;
+        File.open(StudentFileName, ios::out | ios::app);
+        for (ClsStudent &S : Students)
+        {
+            if (File.is_open())
+            {
+                File << ConvertStudentObjToLine(S) << "\n";
+            }
+        }
+        File.close();
+    }
+
+    void UpdateSudentInfo()
+    {
+        vector<ClsStudent> Students = LoadStudents();
+        for (ClsStudent &S : Students)
+        {
+            if (S.GetId() == this->GetId())
+            {
+                S = *this;
+                break;
+            }
+        }
+        _SaveStudentsToFile(Students);
+    }
+
+    void _update()
+    {
+        UpdateSudentInfo();
     }
 
 public:
@@ -119,8 +164,9 @@ public:
         return ClsStudent(enMode::AddMode, id, "", "", "", "", 0, "");
     }
 
-    static void ReadStudentInfo(ClsStudent &Student)
+    static void ReadStudentInfo(ClsStudent &Student, string message)
     {
+        cout << message << "\n";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         Student.SetFullname(readString("Enter student's fullname: "));
         Student.SetPhoneNumber(readString("Enter student's phonenumber: "));
@@ -187,11 +233,37 @@ public:
         return !Find(id).isEmpty();
     }
 
-    void save() {}
+    enum enSvResult
+    {
+        enSvSucceeded = 1,
+        enSvFailedStudentIdExists = 2,
+        enSvFailedEmptyObejct = 3
+    };
+
+    enSvResult save()
+    {
+        switch (_mode)
+        {
+        case enMode::EmptyMode:
+            return enSvResult::enSvFailedEmptyObejct;
+
+        case enMode::AddMode:
+            _AddStudent();
+            SetMode(enMode::updateMode);
+            return enSvResult::enSvSucceeded;
+
+        case enMode::updateMode:
+            _update();
+            return enSvResult::enSvSucceeded;
+
+        default:
+            return enSvResult::enSvFailedEmptyObejct;
+        }
+    }
 
     void PrintStudentInfo()
     {
-        cout << "Student Info: \n";
+        cout << "\nStudent Info: \n";
         cout << "-----------------------------------\n";
         cout << "Student Id       : " << GetId() << "\n";
         cout << "Student Fullname : " << GetFullname() << "\n";
@@ -201,5 +273,17 @@ public:
         cout << "Student Age      : " << GetAge() << "\n";
         cout << "Student Grade    : " << getGrade() << "\n";
         cout << "-----------------------------------\n";
+    }
+
+    static vector<ClsStudent> LoadStudents()
+    {
+        vector<ClsStudent> StudentObjects;
+        vector<string> vStrings = LoadLinesFromFile();
+
+        for (string &S : vStrings)
+        {
+            StudentObjects.push_back(ConvertLineToStudentObj(S));
+        }
+        return StudentObjects;
     }
 };
