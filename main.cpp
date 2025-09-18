@@ -3,6 +3,7 @@
 #include <iomanip>
 #include "./Logic/Student.h"
 #include "./Screens/01_ListStudentsScreen.h"
+#include "./Screens/MainStudentScreen.h"
 using namespace std;
 
 string StFileName = "./Files/StudentsFile.txt";
@@ -199,6 +200,5 @@ void ListStudents()
 
 int main()
 {
-    ListStudents();
-    ClsListStudentsScreen::ShowListStudentsScreen();
+    ClsMAinStudentMenuScreen::ShowMainMenuScreen();
 }
