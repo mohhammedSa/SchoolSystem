@@ -104,9 +104,10 @@ private:
         AddStudentToFile(StudentFileName);
     }
 
-    void ClearFile(string filename){
+    void ClearFile(string filename)
+    {
         fstream File;
-        File.open(filename,ios::out | ios::trunc);
+        File.open(filename, ios::out | ios::trunc);
         File.close();
     }
 
@@ -285,5 +286,27 @@ public:
             StudentObjects.push_back(ConvertLineToStudentObj(S));
         }
         return StudentObjects;
+    }
+
+    void Delete()
+    {
+        vector<ClsStudent> Students = LoadStudents();
+        ClearFile(StudentFileName);
+
+        fstream File;
+        File.open(StudentFileName, ios::out | ios::app);
+
+        for (ClsStudent &S : Students)
+        {
+            if (File.is_open())
+            {
+                if (S.GetId() != this->GetId())
+                {
+                    File << ConvertStudentObjToLine(S) << "\n";
+                }
+            }
+        }
+        File.close();
+        *this = _EmptyStudentObject();
     }
 };

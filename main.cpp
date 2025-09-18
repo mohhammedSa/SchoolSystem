@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <iomanip>
 #include "./Logic/Student.h"
+#include "./Screens/01_ListStudentsScreen.h"
 using namespace std;
 
 string StFileName = "./Files/StudentsFile.txt";
@@ -164,6 +166,27 @@ void UpdateStudent()
     }
 }
 
+void DeleteStudent()
+{
+    string StudentId = readString("Enter student Id: ");
+    ClsStudent St1 = ClsStudent::Find(StudentId);
+    if (St1.isStudentExists(StudentId))
+    {
+        St1.PrintStudentInfo();
+        cout << "\nDo you want to delete this student: [y/n]: ";
+        char answer;
+        cin >> answer;
+
+        St1.Delete();
+        cout << "\nStudent deleted successfuly.\n";
+        St1.PrintStudentInfo();
+    }
+    else
+    {
+        cout << "Student does not exist./";
+    }
+}
+
 void ListStudents()
 {
     vector<ClsStudent> Students = ClsStudent::LoadStudents();
@@ -176,5 +199,6 @@ void ListStudents()
 
 int main()
 {
-    UpdateStudent();
+    ListStudents();
+    ClsListStudentsScreen::ShowListStudentsScreen();
 }
