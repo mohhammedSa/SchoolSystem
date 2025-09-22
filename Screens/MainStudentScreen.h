@@ -1,5 +1,10 @@
 #include <iostream>
 #include "./Screen.h"
+#include "./01_ListStudentsScreen.h"
+#include "./02_AddStudentScreen.h"
+#include "./03_FindStudentScree.h"
+#include "./04_UpdateStudentscreen.h"
+#include "./05_DeleteStudentScreen.h"
 using namespace std;
 
 class ClsMAinStudentMenuScreen : protected ClsScreen
@@ -36,11 +41,26 @@ private:
         return number;
     }
 
-    static void StudentsList() {}
-    static void AddStudent() {}
-    static void FindStudents() {}
-    static void UpdateStudents() {}
-    static void DeleteStudents() {}
+    static void StudentsList()
+    {
+        ClsListStudentsScreen::ShowListStudentsScreen();
+    }
+    static void AddStudent()
+    {
+        ClasAddStudentScreen::ShowAddStudentScreen();
+    }
+    static void FindStudents()
+    {
+        ClsFindStudentScreen::ShowFindStudentScreen();
+    }
+    static void UpdateStudents()
+    {
+        ClsUpdateStudentscreen::ShowUpdateStudentScreen();
+    }
+    static void DeleteStudents()
+    {
+        ClsDeleteStudentScreen::ShowDeleteStudentScreen();
+    }
     static void Logout() {}
 
     static enMainStudentMEnuOption ReadOption()
@@ -68,30 +88,29 @@ private:
 
         case enMainStudentMEnuOption::enAddStudent:
             system("clear");
-            StudentsList();
+            AddStudent();
             ReturnToMainMenu();
             break;
 
         case enMainStudentMEnuOption::enFidStudent:
             system("clear");
-            StudentsList();
+            FindStudents();
             ReturnToMainMenu();
             break;
 
         case enMainStudentMEnuOption::enUpdteStudent:
             system("clear");
-            StudentsList();
+            UpdateStudents();
             ReturnToMainMenu();
             break;
 
         case enMainStudentMEnuOption::enDeleteStudent:
             system("clear");
-            StudentsList();
+            DeleteStudents();
             ReturnToMainMenu();
             break;
 
         case enMainStudentMEnuOption::enLogout:
-            ShowMainMenu();
             break;
 
         default:

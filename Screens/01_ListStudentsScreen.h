@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <vector>
 // #include "/home/hamouda/01_Desk/Programming/ProjectsRepo/C++_Projects/OOP_Projects/SchoolSystem/Logic/Student.h"
