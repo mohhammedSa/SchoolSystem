@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "./Screen.h"
+#include "../Screen.h"
 using namespace std;
 
 class ClsFindStudentScreen : protected ClsScreen

@@ -67,7 +67,8 @@ private:
     static ClsStudent ConvertLineToStudentObj(string line)
     {
         vector<string> vString = Split(line);
-        return ClsStudent(enMode::updateMode, vString[0], vString[1], vString[2], vString[3], vString[4], stoi(vString[5]), vString[6]);
+        return ClsStudent(enMode::updateMode,
+                          vString[0], vString[1], vString[2], vString[3], vString[4], stoi(vString[5]), vString[6]);
     }
 
     static vector<string> LoadLinesFromFile()

@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include "./Screen.h"
-#include "../Logic/Student.h"
+#include "../Screen.h"
+#include "../../Logic/Student.h"
 using namespace std;
 
 class ClasAddStudentScreen : protected ClsScreen
