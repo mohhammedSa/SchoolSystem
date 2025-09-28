@@ -23,6 +23,7 @@ private:
 
     static string ReadString(string message)
     {
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         string word;
         cout << message;
         cin >> word;
@@ -182,7 +183,6 @@ public:
 
     static void ReadTeacherInfo(ClsTeacher &Teacher)
     {
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         Teacher.SetFullname(ReadString("Enter your full name: "));
         Teacher.SetPhoneNumber(ReadString("Enter your phone number: "));
         Teacher.SetEmail(ReadString("Enter your email: "));
@@ -285,7 +285,7 @@ public:
 
     void PrintInfo()
     {
-        cout << "Teacher Info: \n";
+        cout << "\nTeacher Info: \n";
         cout << "----------------------------\n";
         cout << "Teacher ID: " << GetId() << "\n";
         cout << "Teacher Fullname: " << GetFullname() << "\n";

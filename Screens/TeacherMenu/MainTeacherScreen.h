@@ -14,8 +14,8 @@ private:
     enum enTeacherMenu
     {
         enListTeachers = 1,
-        enFindTeacher = 2,
-        enAddTeacher = 3,
+        enAddTeacher = 2,
+        enFindTeacher = 3,
         enUpdateTeacher = 4,
         enDeleteTeacher = 5,
         enLogout = 6
@@ -80,7 +80,7 @@ private:
     {
         system("clear");
         DrawScreenHeader("Teacher Menu Screen.");
-        cout << "[1] List Teachers.\n";
+        cout << "[1] Teachers List.\n";
         cout << "[2] Add Teacher.\n";
         cout << "[3] Find Teacher.\n";
         cout << "[4] Update Teacher.\n";
