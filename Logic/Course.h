@@ -59,10 +59,6 @@ private:
         return ClsCourse(vStrings[0], vStrings[1], vStrings[2]);
     }
 
-    void _UpdateCourseInformation()
-    {
-    }
-
 public:
     ClsCourse(string courseId, string coursename, string assignedTeacher)
         : CourseId(courseId), CoursName(coursename), AssignedTeacherId(assignedTeacher) {
@@ -158,6 +154,17 @@ public:
             }
         }
         return Course;
+    }
+
+    void AddCourse()
+    {
+        fstream File;
+        File.open(CourseFileName, ios::out | ios::app);
+        if (File.is_open())
+        {
+            File << ConvertCourceObjectToLine(*this) << "\n";
+        }
+        File.close();
     }
 
     void Delete()
