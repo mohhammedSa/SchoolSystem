@@ -1,0 +1,10 @@
+C101#//#Mathematics#//#T001
+C102#//#Physics#//#T002
+C103#//#Chemistry#//#T003
+C104#//#Biology#//#T004
+C105#//#English#//#T005
+C106#//#History#//#T006
+C107#//#Computer Science#//#T007
+C108#//#Geography#//#T008
+C109#//#Philosophy#//#T009
+C110#//#Art#//#T010

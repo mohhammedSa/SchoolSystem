@@ -1,8 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
-#include "./Logic/Teacher.h"
-#include "Screens/TeacherMenu/MainTeacherScreen.h"
+#include "./Logic/Course.h"
 using namespace std;
 
 string ReadString(string message)
@@ -13,60 +12,54 @@ string ReadString(string message)
     return word;
 }
 
-void addTeacher()
+void DeleteCourse()
 {
-    string id = ReadString("Enter Id: ");
-    ClsTeacher Teacher = ClsTeacher::Find(id);
-    if (Teacher.isTeacherExists(id))
+    string CourseId = ReadString("Enter course Id: ");
+    ClsCourse Course = ClsCourse::Find(CourseId);
+
+    if (Course.GetId() == CourseId)
     {
-        cout << "\nTeacher Already exists.\n\n";
-        Teacher.PrintInfo();
+        Course.PrintCourseInfo();
+        char answer;
+        cin >> answer;
+        if (tolower(answer) == 'y')
+        {
+            Course.Delete();
+            cout << "Course deleted successfully.\n";
+        }
+        else
+        {
+            cout << "Operation Failed.\n";
+        }
     }
     else
     {
-        cout << "Teacher does not exist.\n";
-        Teacher = ClsTeacher::_EmptyTeacherObjectForAdding(id);
-        ClsTeacher::ReadTeacherInfo(Teacher);
-        Teacher.Save();
-        Teacher.PrintInfo();
+        cout << "Course does not exist.\n";
     }
 }
 
-void updateTeacher()
+void UpdateCourse()
 {
-    string id = ReadString("Enter Id: ");
-    ClsTeacher Teacher = ClsTeacher::Find(id);
-    if (Teacher.isTeacherExists(id))
-    {
-        cout << "\nTeacher exists.\n\n";
-        Teacher.PrintInfo();
-        ClsTeacher::ReadTeacherInfo(Teacher);
-        Teacher.Save();
-        Teacher.PrintInfo();
-    }
-    else
-    {
-        cout << "Teacher does not exist.\n";
-    }
-}
+    string CourseId = ReadString("Enter course Id: ");
+    ClsCourse Course = ClsCourse::Find(CourseId);
 
-void Delete()
-{
-    string id = ReadString("Enter Id: ");
-    ClsTeacher Teacher = ClsTeacher::Find(id);
-    if (Teacher.isTeacherExists(id))
+    if (Course.GetId() == CourseId)
     {
-        cout << "\nTeacher exists.\n\n";
-        Teacher.PrintInfo();
-        Teacher.Delete();
-    }
-    else
-    {
-        cout << "eacher does not exist.\n";
+        Course.PrintCourseInfo();
+
+        cout << "Do you want to update this course: [y/n]: ";
+        char answer;
+        cin >> answer;
+        if (tolower(answer) == 'y')
+        {
+            ClsCourse::ReadCourseInfo(Course);
+            Course.Update();
+            Course.PrintCourseInfo();
+        }
     }
 }
 
 int main()
 {
-    ClsMainTeacherMenuScreen::ShowMainStudentMenu();
+    
 }
