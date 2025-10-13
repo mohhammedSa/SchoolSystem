@@ -2,11 +2,18 @@
 #include <iostream>
 #include "../Screen.h"
 #include "../../Logic/Student.h"
+#include "../../Global.h"
 using namespace std;
 
 class ClasAddStudentScreen : protected ClsScreen
 {
 private:
+    static void CreateAnEmptyFile(string filename)
+    {
+        fstream aFile;
+        aFile.open(filename, ios::out);
+        aFile.close();
+    }
     static string readString(string message)
     {
         string S;
@@ -17,10 +24,10 @@ private:
     static void AddStudent()
     {
         string StudentId = readString("Enter student Id: ");
-        ClsStudent St1 = ClsStudent::Find(StudentId);
-        if (St1.isStudentExists(StudentId))
+        ClsStudent Student = ClsStudent::Find(StudentId);
+        if (Student.isStudentExists(StudentId))
         {
-            St1.PrintStudentInfo();
+            Student.PrintStudentInfo();
         }
         else
         {
@@ -31,21 +38,25 @@ private:
 
             if (tolower(answer) == 'y')
             {
-                St1 = ClsStudent::EmptyObjectForAdding(StudentId);
-                ClsStudent::ReadStudentInfo(St1, "\nRead Student's info for add: ");
-                St1.PrintStudentInfo();
+                Student = ClsStudent::EmptyObjectForAdding(StudentId);
+                ClsStudent::ReadStudentInfo(Student, "\nRead Student's info for add: ");
+                Student.PrintStudentInfo();
 
-                cout << "Do you want to add " << St1.GetFullname() << " : [y/n]: ";
+                cout << "Do you want to add " << Student.GetFullname() << " : [y/n]: ";
                 char answer;
                 cin >> answer;
+
+                
+                string filename = "/home/hamouda/01_Desk/Programming/ProjectsRepo/C++_Projects/OOP_Projects/SchoolSystem/Files/Students/" + Student.GetId() + ".txt";
                 if (tolower(answer) == 'y')
                 {
-                    ClsStudent::enSvResult result = St1.save();
+                    ClsStudent::enSvResult result = Student.save();
                     switch (result)
                     {
                     case ClsStudent::enSvResult::enSvSucceeded:
                         cout << "\nStudent added succussfully\n";
-                        // Create a file with Student id to save all cources he will enroll in.
+                        CurrentStudent = Student;
+                        CreateAnEmptyFile(filename);
                         break;
 
                     case ClsStudent::enSvResult::enSvFailedEmptyObejct:

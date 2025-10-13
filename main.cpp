@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <fstream>
 #include "Screens/StudentMenu/MainStudentScreen.h"
+#include "Logic/Student.h"
 using namespace std;
 
 void CreateAnEmptyFile(string filename)
@@ -14,5 +15,5 @@ void CreateAnEmptyFile(string filename)
 
 int main()
 {
-    CreateAnEmptyFile();
+    ClsMAinStudentMenuScreen::ShowMainMenuScreen();
 }

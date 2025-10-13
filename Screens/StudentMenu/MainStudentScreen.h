@@ -12,7 +12,7 @@ using namespace std;
 class ClsMAinStudentMenuScreen : protected ClsScreen
 {
 private:
-    enum enMainStudentMEnuOption
+    enum enMainStudentMenuOption
     {
         enListStudents = 1,
         enAddStudent = 2,
@@ -70,9 +70,9 @@ private:
     }
     static void Logout() {}
 
-    static enMainStudentMEnuOption ReadOption()
+    static enMainStudentMenuOption ReadOption()
     {
-        return (enMainStudentMEnuOption)ReadNumberInRange("Choose what you want to do: [1 to 6]: ", 1, 7, "Number out of range.");
+        return (enMainStudentMenuOption)ReadNumberInRange("Choose what you want to do: [1 to 7]: ", 1, 7, "Number out of range.");
     }
 
     static void ReturnToMainMenu()
@@ -82,47 +82,47 @@ private:
         ShowMainMenu();
     }
 
-    static void PerformMainOption(enMainStudentMEnuOption option)
+    static void PerformMainOption(enMainStudentMenuOption option)
     {
         switch (option)
         {
-        case enMainStudentMEnuOption::enListStudents:
+        case enMainStudentMenuOption::enListStudents:
             system("clear");
             StudentsList();
             ReturnToMainMenu();
             break;
 
-        case enMainStudentMEnuOption::enAddStudent:
+        case enMainStudentMenuOption::enAddStudent:
             system("clear");
             AddStudent();
             ReturnToMainMenu();
             break;
 
-        case enMainStudentMEnuOption::enFidStudent:
+        case enMainStudentMenuOption::enFidStudent:
             system("clear");
             FindStudents();
             ReturnToMainMenu();
             break;
 
-        case enMainStudentMEnuOption::enUpdteStudent:
+        case enMainStudentMenuOption::enUpdteStudent:
             system("clear");
             UpdateStudents();
             ReturnToMainMenu();
             break;
 
-        case enMainStudentMEnuOption::enDeleteStudent:
+        case enMainStudentMenuOption::enDeleteStudent:
             system("clear");
             DeleteStudents();
             ReturnToMainMenu();
             break;
 
-        case enMainStudentMEnuOption::enAvailableCourses:
+        case enMainStudentMenuOption::enAvailableCourses:
             system("clear");
             EnrollInCourse();
             ReturnToMainMenu();
             break;
 
-        case enMainStudentMEnuOption::enLogout:
+        case enMainStudentMenuOption::enLogout:
             break;
 
         default:
