@@ -19,12 +19,10 @@ private:
              << "| " << setw(5) << to_string(Student.GetAge())
              << "| " << setw(6) << Student.getGrade() << "\n";
     }
-    static void ListStudents()
-    {
-        vector<ClsStudent> Students = ClsStudent::LoadStudents();
-        string subtitle = to_string(Students.size()) + " Student(s)";
-        DrawScreenHeader("List Studetns Screen.", subtitle);
 
+public:
+    static void ListStudents(vector<ClsStudent> Students)
+    {
         cout << "\n-----------------------------------------------------------------------------------------------------------------------------\n";
         cout << "|" << left << setw(12) << " Student ID"
              << "|" << setw(20) << " Fullname"
@@ -45,11 +43,11 @@ private:
             }
         cout << "-----------------------------------------------------------------------------------------------------------------------------\n";
     }
-
-public:
-    static void
-    ShowListStudentsScreen()
+    static void ShowListStudentsScreen()
     {
-        ListStudents();
+        vector<ClsStudent> Students = ClsStudent::LoadStudents();
+        string subtitle = to_string(Students.size()) + " Student(s)";
+        DrawScreenHeader("List Studetns Screen.", subtitle);
+        ListStudents(Students);
     }
 };

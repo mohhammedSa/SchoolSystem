@@ -45,6 +45,7 @@ private:
                     {
                     case ClsStudent::enSvResult::enSvSucceeded:
                         cout << "\nStudent added succussfully\n";
+                        // Create a file with Student id to save all cources he will enroll in.
                         break;
 
                     case ClsStudent::enSvResult::enSvFailedEmptyObejct:

@@ -1,10 +1,12 @@
 #include <iostream>
 #include "../Screen.h"
+#include "../../Logic/Course.h"
 #include "./01_ListStudentsScreen.h"
 #include "./02_AddStudentScreen.h"
 #include "./03_FindStudentScree.h"
 #include "./04_UpdateStudentscreen.h"
 #include "./05_DeleteStudentScreen.h"
+#include "./06_EnrollInCourseScreen.h"
 using namespace std;
 
 class ClsMAinStudentMenuScreen : protected ClsScreen
@@ -17,7 +19,8 @@ private:
         enFidStudent = 3,
         enUpdteStudent = 4,
         enDeleteStudent = 5,
-        enLogout = 6
+        enAvailableCourses = 6,
+        enLogout = 7
     };
 
     static short ReadNumberInRange(string message, short from, short to, string errorMsg)
@@ -61,12 +64,15 @@ private:
     {
         ClsDeleteStudentScreen::ShowDeleteStudentScreen();
     }
+    static void EnrollInCourse()
+    {
+        ClsEnrollInCourseScreen::ShowEnrollInCourseScreen();
+    }
     static void Logout() {}
 
     static enMainStudentMEnuOption ReadOption()
     {
-
-        return (enMainStudentMEnuOption)ReadNumberInRange("Choose what you want to do: [1 to 6]: ", 1, 6, "Number out of range.");
+        return (enMainStudentMEnuOption)ReadNumberInRange("Choose what you want to do: [1 to 6]: ", 1, 7, "Number out of range.");
     }
 
     static void ReturnToMainMenu()
@@ -110,6 +116,12 @@ private:
             ReturnToMainMenu();
             break;
 
+        case enMainStudentMEnuOption::enAvailableCourses:
+            system("clear");
+            EnrollInCourse();
+            ReturnToMainMenu();
+            break;
+
         case enMainStudentMEnuOption::enLogout:
             break;
 
@@ -127,7 +139,8 @@ private:
         cout << "[3] Find Student.\n";
         cout << "[4] Update Student.\n";
         cout << "[5] Delete Student.\n";
-        cout << "[6] Logout\n";
+        cout << "[6] Enroll In Courses\n";
+        cout << "[7] Logout\n";
         cout << "------------------------------\n";
         PerformMainOption(ReadOption());
     }
