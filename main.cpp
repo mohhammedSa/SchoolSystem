@@ -2,8 +2,9 @@
 #include <vector>
 #include <iomanip>
 #include <fstream>
-#include "Screens/StudentMenu/MainStudentScreen.h"
-#include "Logic/Student.h"
+#include "Screens/ManagerMenu/MainManagerScreen.h"
+#include "Screens/LoginScreen.h"
+#include "Logic/Manager.h"
 using namespace std;
 
 void CreateAnEmptyFile(string filename)
@@ -13,7 +14,41 @@ void CreateAnEmptyFile(string filename)
     aFile.close();
 }
 
+void AddManagerScreen()
+{
+    string ManagerId;
+    cout << "Enter manager id: ";
+    cin >> ManagerId;
+    ClsManager Manager = ClsManager::Find(ManagerId);
+    if (Manager.isManagerExist(ManagerId))
+    {
+        cout << "\nManager already exist.\n";
+    }
+    else
+    {
+        Manager = ClsManager::EmptyObjForAdding(ManagerId);
+        ClsManager::ReadManagerInfo(Manager);
+
+        ClsManager::enSaveResult result = Manager.Save();
+        switch (result)
+        {
+        case ClsManager::enSaveResult::enSvSuceed:
+            cout << "\nManager added successfully.\n";
+            Manager.PrintManagerInfo();
+            break;
+
+        default:
+            cout << "\nOperation Failed.\n";
+            break;
+        }
+    }
+}
+
 int main()
 {
-    ClsMAinStudentMenuScreen::ShowMainMenuScreen();
+    while (true)
+    {
+        ClsLoginScreen::ShowLoginScreen();
+    }
+    return 0;
 }

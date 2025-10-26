@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include "Logic/Student.h"
 #include "Logic/Teacher.h"

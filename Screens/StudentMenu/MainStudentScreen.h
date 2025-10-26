@@ -1,3 +1,5 @@
+
+#pragma once
 #include <iostream>
 #include "../Screen.h"
 #include "../../Logic/Course.h"
@@ -9,7 +11,7 @@
 #include "./06_EnrollInCourseScreen.h"
 using namespace std;
 
-class ClsMAinStudentMenuScreen : protected ClsScreen
+class ClsMainStudentMenuScreen : protected ClsScreen
 {
 private:
     enum enMainStudentMenuOption
@@ -68,7 +70,10 @@ private:
     {
         ClsEnrollInCourseScreen::ShowEnrollInCourseScreen();
     }
-    static void Logout() {}
+    static void Logout()
+    {
+        CurrentStudent = ClsStudent::Find("");
+    }
 
     static enMainStudentMenuOption ReadOption()
     {
@@ -123,6 +128,7 @@ private:
             break;
 
         case enMainStudentMenuOption::enLogout:
+            Logout();
             break;
 
         default:
@@ -140,7 +146,7 @@ private:
         cout << "[4] Update Student.\n";
         cout << "[5] Delete Student.\n";
         cout << "[6] Enroll In Courses\n";
-        cout << "[7] Logout\n";
+        cout << "[7] Main Menu\n";
         cout << "------------------------------\n";
         PerformMainOption(ReadOption());
     }

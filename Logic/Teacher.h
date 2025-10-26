@@ -40,7 +40,7 @@ private:
 
     static ClsTeacher _EmptyTeacherObject()
     {
-        return ClsTeacher(enMode::EmpyMode, "", "", "", "", "", 0, "");
+        return ClsTeacher(enMode::EmpyMode, "", "", "", "", "", 0, "", "");
     }
 
     static vector<string> _Split(string line, string delim = "#//#")
@@ -76,7 +76,8 @@ private:
             vStrings[3],
             vStrings[4],
             stoi(vStrings[5]),
-            vStrings[6]);
+            vStrings[6],
+            vStrings[7]);
     }
 
     static string _ConvertObjectToLine(ClsTeacher Teacher, string delim = "#//#")
@@ -87,7 +88,8 @@ private:
                Teacher.GetAdress() + delim +
                Teacher.GetEmail() + delim +
                to_string(Teacher.GetAge()) + delim +
-               Teacher.getSubject();
+               Teacher.getSubject() + delim +
+               Teacher.GetPAssword();
     }
 
     static void _AddLineToFile(ClsTeacher Teacher)
@@ -143,14 +145,21 @@ private:
     }
 
 public:
+    static string readString(string message)
+    {
+        string S;
+        cout << message;
+        getline(cin, S);
+        return S;
+    }
     bool isEmpty()
     {
         return _Mode == enMode::EmpyMode;
     }
 
     ClsTeacher() {};
-    ClsTeacher(enMode mode, string ID, string fullName, string phoneNumber, string email, string adress, short age, string subject)
-        : ClsPerson(ID, fullName, phoneNumber, email, adress, age)
+    ClsTeacher(enMode mode, string ID, string fullName, string phoneNumber, string email, string adress, short age, string subject, string password)
+        : ClsPerson(ID, fullName, phoneNumber, email, adress, age, password)
     {
         _Mode = mode;
         _Subject = subject;
@@ -158,7 +167,7 @@ public:
 
     static ClsTeacher _EmptyTeacherObjectForAdding(string teacherID)
     {
-        return ClsTeacher(enMode::AddMode, teacherID, "", "", "", "", 0, "");
+        return ClsTeacher(enMode::AddMode, teacherID, "", "", "", "", 0, "", "");
     }
 
     void setSubject(string subject)
@@ -190,6 +199,7 @@ public:
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         Teacher.SetAge(ReadAge());
         Teacher.setSubject(ReadString("What is your subject: "));
+        Teacher.SetPassword(ReadString("Enter teacher's password: "));
     }
 
     static ClsTeacher Find(string teacherId)
@@ -204,6 +214,27 @@ public:
             {
                 Teacher = _ConvertLineToObject(line);
                 if (Teacher.GetId() == teacherId)
+                {
+                    TeacherFile.close();
+                    return Teacher;
+                }
+            }
+        }
+        return _EmptyTeacherObject();
+    }
+
+    static ClsTeacher Find(string teacherId, string password)
+    {
+        ClsTeacher Teacher;
+        fstream TeacherFile;
+        TeacherFile.open(TeacherFileName, ios::in);
+        if (TeacherFile.is_open())
+        {
+            string line;
+            while (getline(TeacherFile, line))
+            {
+                Teacher = _ConvertLineToObject(line);
+                if (Teacher.GetId() == teacherId && Teacher.GetPAssword() == password)
                 {
                     TeacherFile.close();
                     return Teacher;

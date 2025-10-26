@@ -5,13 +5,12 @@ using namespace std;
 class ClsPerson
 {
 private:
-    string _ID, _FullName, _PhoneNumber, _Email, _Adress;
+    string _ID, _FullName, _PhoneNumber, _Email, _Adress, _Password;
     short _Age;
 
 public:
-    
-    ClsPerson(){};
-    ClsPerson(string ID, string fullName, string phoneNumber, string email, string adress, short age)
+    ClsPerson() {};
+    ClsPerson(string ID, string fullName, string phoneNumber, string email, string adress, short age, string password)
     {
         _ID = ID;
         _FullName = fullName;
@@ -19,6 +18,7 @@ public:
         _Email = email;
         _Adress = adress;
         _Age = age;
+        _Password = password;
     }
 
     string GetId()
@@ -69,5 +69,14 @@ public:
     short GetAge()
     {
         return _Age;
+    }
+
+    void SetPassword(string password)
+    {
+        _Password = password;
+    }
+    string GetPAssword()
+    {
+        return _Password;
     }
 };

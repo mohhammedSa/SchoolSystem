@@ -22,22 +22,14 @@ private:
 
     static ClsStudent _EmptyStudentObject()
     {
-        return ClsStudent(enMode::EmptyMode, "", "", "", "", "", 0, "");
-    }
-
-    static string readString(string message)
-    {
-        string S;
-        cout << message;
-        getline(cin, S);
-        return S;
+        return ClsStudent(enMode::EmptyMode, "", "", "", "", "", 0, "", "");
     }
 
     static string ConvertStudentObjToLine(ClsStudent Student, string delim = "#//#")
     {
         return Student.GetId() + delim + Student.GetFullname() + delim + Student.GetPhoneNumber() +
                delim + Student.GetEmail() + delim + Student.GetAdress() + delim + to_string(Student.GetAge()) +
-               delim + Student.getGrade();
+               delim + Student.getGrade() + delim + Student.GetPAssword();
     }
 
     static vector<string> Split(string line, string delim = "#//#")
@@ -68,7 +60,8 @@ private:
     {
         vector<string> vString = Split(line);
         return ClsStudent(enMode::updateMode,
-                          vString[0], vString[1], vString[2], vString[3], vString[4], stoi(vString[5]), vString[6]);
+                          vString[0], vString[1], vString[2], vString[3], vString[4], stoi(vString[5]), vString[6],
+                          vString[7]);
     }
 
     static vector<string> LoadLinesFromFile()
@@ -147,6 +140,13 @@ private:
     }
 
 public:
+    static string readString(string message)
+    {
+        string S;
+        cout << message;
+        getline(cin, S);
+        return S;
+    }
     bool isEmpty()
     {
         return _mode == enMode::EmptyMode;
@@ -154,8 +154,8 @@ public:
 
     ClsStudent() {};
 
-    ClsStudent(enMode mode, string id, string fullname, string phNumber, string email, string adress, short age, string grade)
-        : ClsPerson(id, fullname, phNumber, email, adress, age)
+    ClsStudent(enMode mode, string id, string fullname, string phNumber, string email, string adress, short age, string grade, string password)
+        : ClsPerson(id, fullname, phNumber, email, adress, age, password)
     {
         _mode = mode;
         _Grade = grade;
@@ -163,7 +163,7 @@ public:
 
     static ClsStudent EmptyObjectForAdding(string id)
     {
-        return ClsStudent(enMode::AddMode, id, "", "", "", "", 0, "");
+        return ClsStudent(enMode::AddMode, id, "", "", "", "", 0, "", "");
     }
 
     static void ReadStudentInfo(ClsStudent &Student, string message)
@@ -180,6 +180,7 @@ public:
         Student.SetAge(age);
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         Student.setGrade(readString("Enter student's grade: "));
+        Student.SetPassword(readString("Enter student's password: "));
     }
 
     void SetMode(enMode mode)
@@ -216,6 +217,35 @@ public:
                 {
                     Student = ConvertLineToStudentObj(line);
                     if (Id == Student.GetId())
+                    {
+                        StudentsFile.close();
+                        return Student;
+                    }
+                }
+            }
+        }
+        else
+        {
+            return _EmptyStudentObject();
+        }
+        return _EmptyStudentObject();
+    }
+
+    static ClsStudent Find(string Id, string password)
+    {
+        ClsStudent Student;
+        ifstream file(StudentFileName);
+        if (file.good())
+        {
+            fstream StudentsFile;
+            StudentsFile.open(StudentFileName, ios::in);
+            if (StudentsFile.is_open())
+            {
+                string line;
+                while (getline(StudentsFile, line))
+                {
+                    Student = ConvertLineToStudentObj(line);
+                    if (Id == Student.GetId() && password == Student.GetPAssword())
                     {
                         StudentsFile.close();
                         return Student;

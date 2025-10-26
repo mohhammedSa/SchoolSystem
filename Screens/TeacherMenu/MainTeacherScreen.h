@@ -67,7 +67,10 @@ private:
     {
         ClsDeleteTeachersScreen::ShowDeleteTeachersScreen();
     }
-    static void Logout() {}
+    static void Logout()
+    {
+        CurrentTeacher = ClsTeacher::Find("");
+    }
 
     static void GoBackToMainMenu()
     {
@@ -85,7 +88,7 @@ private:
         cout << "[3] Find Teacher.\n";
         cout << "[4] Update Teacher.\n";
         cout << "[5] Delete Teacher.\n";
-        cout << "[6] Logout.\n";
+        cout << "[6] Main Menu.\n";
         cout << "---------------------------------------------\n";
         _PerformTeacherOption(_ReadTeacherMenuOption());
     }
@@ -126,7 +129,7 @@ private:
     }
 
 public:
-    static void ShowMainStudentMenu()
+    static void ShowMainTeacherMenu()
     {
         ShowMainMenu();
     }
