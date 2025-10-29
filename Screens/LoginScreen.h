@@ -23,9 +23,10 @@ private:
     static int ReadUserType()
     {
         int userType;
-        cout << "\nAre you a: " << endl;
+        cout << "\nLogin as a: " << endl;
         cout << "1. Student" << endl;
         cout << "2. Teacher" << endl;
+        cout << "--------------------\n";
         cout << "Enter your choice: ";
         cin >> userType;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');

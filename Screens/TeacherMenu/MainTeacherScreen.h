@@ -1,11 +1,8 @@
 #pragma once
 #include <iostream>
 #include "../Screen.h"
-#include "01_ListTeachersScreen.h"
-#include "02_FindTeacherScreen.h"
-#include "03_AddTeacherScreen.h"
-#include "04_UpdateTeacherScreen.h"
-#include "05_DeleteTeacherScreen.h"
+#include "01_ChooseCoursesToTeachScreen.h"
+#include "02_TeachingCoursesScreen.h"
 using namespace std;
 
 class ClsMainTeacherMenuScreen : protected ClsScreen
@@ -13,12 +10,9 @@ class ClsMainTeacherMenuScreen : protected ClsScreen
 private:
     enum enTeacherMenu
     {
-        enListTeachers = 1,
-        enAddTeacher = 2,
-        enFindTeacher = 3,
-        enUpdateTeacher = 4,
-        enDeleteTeacher = 5,
-        enLogout = 6
+        enChooseCourses = 1,
+        enTeachingCoursesList = 2,
+        enLogout = 3
     };
 
     static short _ReadNumberInRange(string message, short from, short to, string errorMsg)
@@ -44,29 +38,18 @@ private:
 
     static enTeacherMenu _ReadTeacherMenuOption()
     {
-        return enTeacherMenu(_ReadNumberInRange("Choose what do you want ot do: [1/6]: ", 1, 6, "Numebr out of range."));
+        return enTeacherMenu(_ReadNumberInRange("Choose what do you want to do: [1->3]: ", 1, 3, "Numebr out of range."));
     }
 
-    static void ListTeachersScreen()
+    static void ChooseCoursesScreen()
     {
-        ClsListTeachersScreen::ShowListTeachersScreen();
+        ClsChooseCourseToTeachScreen::ShowChooseCurseScreen();
     }
-    static void FindTeacherScreen()
+    static void TeachingCoursesListScreen()
     {
-        ClsFindTeacherScreen::ShowFindTeacherScreen();
+        ClsTeachingCoursesScreen::ShowTeachingCoursesScreen();
     }
-    static void AddTeacherScreen()
-    {
-        ClsAddTeachersScreen::ShowAddTeacherScreen();
-    }
-    static void UpdateTeacherScreen()
-    {
-        ClsUpdateTeachersScreen::ShowUpdateTeachersScreen();
-    }
-    static void DeleteTeacherScreen()
-    {
-        ClsDeleteTeachersScreen::ShowDeleteTeachersScreen();
-    }
+
     static void Logout()
     {
         CurrentTeacher = ClsTeacher::Find("");
@@ -83,12 +66,9 @@ private:
     {
         system("clear");
         DrawScreenHeader("Teacher Menu Screen.");
-        cout << "[1] Teachers List.\n";
-        cout << "[2] Add Teacher.\n";
-        cout << "[3] Find Teacher.\n";
-        cout << "[4] Update Teacher.\n";
-        cout << "[5] Delete Teacher.\n";
-        cout << "[6] Main Menu.\n";
+        cout << "[1] Choose Courses To Teach.\n";
+        cout << "[2] Teaching Course List.\n";
+        cout << "[3] Main Menu.\n";
         cout << "---------------------------------------------\n";
         _PerformTeacherOption(_ReadTeacherMenuOption());
     }
@@ -97,29 +77,14 @@ private:
     {
         switch (option)
         {
-        case enTeacherMenu::enListTeachers:
+        case enTeacherMenu::enChooseCourses:
             system("clear");
-            ListTeachersScreen();
+            ChooseCoursesScreen();
             GoBackToMainMenu();
             break;
-        case enTeacherMenu::enFindTeacher:
+        case enTeacherMenu::enTeachingCoursesList:
             system("clear");
-            FindTeacherScreen();
-            GoBackToMainMenu();
-            break;
-        case enTeacherMenu::enAddTeacher:
-            system("clear");
-            AddTeacherScreen();
-            GoBackToMainMenu();
-            break;
-        case enTeacherMenu::enUpdateTeacher:
-            system("clear");
-            UpdateTeacherScreen();
-            GoBackToMainMenu();
-            break;
-        case enTeacherMenu::enDeleteTeacher:
-            system("clear");
-            DeleteTeacherScreen();
+            TeachingCoursesListScreen();
             GoBackToMainMenu();
             break;
         default:

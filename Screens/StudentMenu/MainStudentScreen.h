@@ -3,12 +3,8 @@
 #include <iostream>
 #include "../Screen.h"
 #include "../../Logic/Course.h"
-#include "./01_ListStudentsScreen.h"
-#include "./02_AddStudentScreen.h"
-#include "./03_FindStudentScree.h"
-#include "./04_UpdateStudentscreen.h"
-#include "./05_DeleteStudentScreen.h"
-#include "./06_EnrollInCourseScreen.h"
+#include "./01_ShowEnrolledCoursesScreen.h"
+#include "./02_EnrollInCourseScreen.h"
 using namespace std;
 
 class ClsMainStudentMenuScreen : protected ClsScreen
@@ -16,13 +12,9 @@ class ClsMainStudentMenuScreen : protected ClsScreen
 private:
     enum enMainStudentMenuOption
     {
-        enListStudents = 1,
-        enAddStudent = 2,
-        enFidStudent = 3,
-        enUpdteStudent = 4,
-        enDeleteStudent = 5,
-        enAvailableCourses = 6,
-        enLogout = 7
+        enShowEnrolledCourses = 1,
+        enAvailableCourses = 2,
+        enLogout = 3
     };
 
     static short ReadNumberInRange(string message, short from, short to, string errorMsg)
@@ -46,25 +38,9 @@ private:
         return number;
     }
 
-    static void StudentsList()
+    static void ShowEnrolledCourses()
     {
-        ClsListStudentsScreen::ShowListStudentsScreen();
-    }
-    static void AddStudent()
-    {
-        ClasAddStudentScreen::ShowAddStudentScreen();
-    }
-    static void FindStudents()
-    {
-        ClsFindStudentScreen::ShowFindStudentScreen();
-    }
-    static void UpdateStudents()
-    {
-        ClsUpdateStudentscreen::ShowUpdateStudentScreen();
-    }
-    static void DeleteStudents()
-    {
-        ClsDeleteStudentScreen::ShowDeleteStudentScreen();
+        ClsShowEnrolledCoursesScreen::ShowEnroledCoursesScreen();
     }
     static void EnrollInCourse()
     {
@@ -77,7 +53,7 @@ private:
 
     static enMainStudentMenuOption ReadOption()
     {
-        return (enMainStudentMenuOption)ReadNumberInRange("Choose what you want to do: [1 to 7]: ", 1, 7, "Number out of range.");
+        return (enMainStudentMenuOption)ReadNumberInRange("Choose what you want to do: [1 to 3]: ", 1, 3, "Number out of range.");
     }
 
     static void ReturnToMainMenu()
@@ -91,33 +67,10 @@ private:
     {
         switch (option)
         {
-        case enMainStudentMenuOption::enListStudents:
-            system("clear");
-            StudentsList();
-            ReturnToMainMenu();
-            break;
 
-        case enMainStudentMenuOption::enAddStudent:
+        case enMainStudentMenuOption::enShowEnrolledCourses:
             system("clear");
-            AddStudent();
-            ReturnToMainMenu();
-            break;
-
-        case enMainStudentMenuOption::enFidStudent:
-            system("clear");
-            FindStudents();
-            ReturnToMainMenu();
-            break;
-
-        case enMainStudentMenuOption::enUpdteStudent:
-            system("clear");
-            UpdateStudents();
-            ReturnToMainMenu();
-            break;
-
-        case enMainStudentMenuOption::enDeleteStudent:
-            system("clear");
-            DeleteStudents();
+            ShowEnrolledCourses();
             ReturnToMainMenu();
             break;
 
@@ -140,13 +93,9 @@ private:
     {
         system("clear");
         DrawScreenHeader("Main Student Menu.");
-        cout << "[1] List Students.\n";
-        cout << "[2] Add Student.\n";
-        cout << "[3] Find Student.\n";
-        cout << "[4] Update Student.\n";
-        cout << "[5] Delete Student.\n";
-        cout << "[6] Enroll In Courses\n";
-        cout << "[7] Main Menu\n";
+        cout << "[1] Show Enroleld Courses.\n";
+        cout << "[2] Enroll In Courses\n";
+        cout << "[3] Main Menu\n";
         cout << "------------------------------\n";
         PerformMainOption(ReadOption());
     }

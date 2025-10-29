@@ -5,6 +5,7 @@
 #include "Screens/ManagerMenu/MainManagerScreen.h"
 #include "Screens/LoginScreen.h"
 #include "Logic/Manager.h"
+#include "Screens/StudentMenu/01_ShowEnrolledCoursesScreen.h"
 using namespace std;
 
 void CreateAnEmptyFile(string filename)
@@ -41,6 +42,19 @@ void AddManagerScreen()
             cout << "\nOperation Failed.\n";
             break;
         }
+    }
+}
+
+static void DeleteAFile(const char *Filename)
+{
+    const char *name = Filename;
+    if (remove(name) == 0)
+    {
+        cout << "File deleted successfully.\n";
+    }
+    else
+    {
+        perror("Error Deliting File.\n");
     }
 }
 

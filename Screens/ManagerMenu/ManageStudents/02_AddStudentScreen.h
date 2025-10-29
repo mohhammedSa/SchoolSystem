@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
-#include "../Screen.h"
-#include "../../Logic/Student.h"
-#include "../../Global.h"
+#include "../../Screen.h"
+#include "../../../Logic/Student.h"
+#include "../../../Global.h"
 using namespace std;
 
 class ClasAddStudentScreen : protected ClsScreen

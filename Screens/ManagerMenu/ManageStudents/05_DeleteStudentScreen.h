@@ -1,6 +1,6 @@
 #pragma once
 using namespace std;
-#include "../Screen.h"
+#include "../../Screen.h"
 
 class ClsDeleteStudentScreen : protected ClsScreen
 {
@@ -11,6 +11,18 @@ private:
         cout << message;
         cin >> S;
         return S;
+    }
+    static void DeleteAFile(const char *Filename)
+    {
+        const char *name = Filename;
+        if (remove(name) == 0)
+        {
+            cout << "File deleted successfully.\n";
+        }
+        else
+        {
+            perror("Error Deliting File.\n");
+        }
     }
     static void DeleteStudent()
     {
@@ -24,6 +36,8 @@ private:
             cin >> answer;
 
             St1.Delete();
+            string filename = "/home/hamouda/01_Desk/Programming/ProjectsRepo/C++_Projects/OOP_Projects/SchoolSystem/Files/Students/" + StudentId + ".txt";
+            DeleteAFile(filename.c_str());
             cout << "\nStudent deleted successfuly.\n";
             St1.PrintStudentInfo();
         }
@@ -37,5 +51,6 @@ public:
     static void ShowDeleteStudentScreen()
     {
         DrawScreenHeader("Delete Student Screen.");
+        DeleteStudent();
     }
 };

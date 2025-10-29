@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 #include "../Screen.h"
-#include "../StudentMenu/MainStudentScreen.h"
+#include "ManageStudents/MainStudentsScreen.h"
 #include "../TeacherMenu/MainTeacherScreen.h"
-#include "../ManagerMenu/MainManagerScreen.h"
+#include "../CourseMenu/MainMenu.h"
 using namespace std;
 
 class ClsMainManagerScreen : protected ClsScreen
@@ -13,7 +13,8 @@ private:
     {
         enManageStudents = 1,
         enManageTeachers = 2,
-        enManageManagers = 3
+        enManageCourses = 3,
+        enLogout = 4
     };
 
     static short ReadNumberInRange(string message, short from, short to, string errorMsg = "Out of range.")
@@ -39,7 +40,7 @@ private:
 
     static enManagerOptions ReadManagerOption()
     {
-        return (enManagerOptions)ReadNumberInRange("Choose what do you want: [1 -> 3]: ", 1, 3);
+        return (enManagerOptions)ReadNumberInRange("Choose what do you want: [1 -> 4]: ", 1, 4);
     }
 
     static void ManagerMenu()
@@ -48,7 +49,8 @@ private:
         DrawScreenHeader("Main Manager Screen.");
         cout << "[1] Manage Students.\n";
         cout << "[2] Manage Teachers.\n";
-        cout << "[3] Manage Managers.\n";
+        cout << "[3] Manage Courses.\n";
+        cout << "[4] Logout.\n";
         cout << "---------------------------------\n";
         PerformManageOptions(ReadManagerOption());
     }
@@ -65,7 +67,7 @@ private:
         switch (option)
         {
         case enManagerOptions::enManageStudents:
-            ClsMainStudentMenuScreen::ShowMainMenuScreen();
+            ClsMainStudentsMenuScreen::ShowMainMenuScreen();
             ManagerMenu();
             break;
 
@@ -74,7 +76,12 @@ private:
             ManagerMenu();
             break;
 
-        case enManagerOptions::enManageManagers:
+        case enManagerOptions::enManageCourses:
+            ClsCourseMainMenu::ShowMainMenuScreen();
+            ManagerMenu();
+            break;
+
+        case enManagerOptions::enLogout:
             break;
 
         default:
